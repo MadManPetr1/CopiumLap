@@ -1,0 +1,112 @@
+html,body {background: linear-gradient(135deg, #161b22 80%, #21314d 100%); color: #e3eaf7; font-family: 'Montserrat', 'Segoe UI', Arial, sans-serif; margin:0; padding:0; min-height:100vh;}
+.main-grid {
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: 24px;
+    max-width: 900px;
+    margin: 35px auto 0 auto;
+    align-items: flex-start;
+}
+.window {
+    max-width: 430px;
+    margin: 0;
+    border-radius: 20px;
+    box-shadow: 0 14px 60px #0a153044, 0 1.5px 0 #222b44;
+    background: rgba(30, 37, 55, 0.98);
+    overflow: hidden;
+    animation: popin 0.7s cubic-bezier(.68,-0.55,.27,1.55);
+}
+.rightboard {
+    min-width: 270px;
+    max-width: 340px;
+    box-shadow: 0 14px 60px #0a153044, 0 1.5px 0 #222b44;
+    border-radius: 20px;
+    background: rgba(30, 37, 55, 0.98);
+    padding: 0;
+    margin: 0;
+}
+.gainsbox {
+    margin-top: 24px;
+    background: #21253a;
+    border-radius: 16px;
+    box-shadow: 0 6px 30px #0a153033, 0 1px 0 #222b44;
+    padding: 18px 16px 17px 16px;
+    max-width: 340px;
+    min-width: 270px;
+    text-align: center;
+}
+.gainsbox .gains-head {
+    color: #9be5e3;
+    font-size: 1.08em;
+    font-weight: 700;
+    margin-bottom: 7px;
+    letter-spacing:.2px;
+}
+.gainsbox .gains-result {
+    margin: 7px 0 15px 0;
+    font-size: 1.13em;
+    font-weight: 600;
+    letter-spacing: .2px;
+}
+.g-motivation {color:#7fb0ff;}
+.g-insult {color:#fc7f7f;}
+.g-excuse {color:#f7cb74;}
+.g-flip {color:#6ec2f7;}
+.g-value.gain {color: #72fcaf;}
+.g-value.loss {color: #f67c7c;}
+.g-value.neutral {color: #fcf872;}
+.gainsbox .btn {width: 90%; margin-top: 0;}
+@media (max-width: 950px) {
+    .main-grid {
+        grid-template-columns: 1fr;
+        max-width: 99vw;
+        gap: 0;
+    }
+    .rightboard, .window, .gainsbox {
+        max-width: 99vw;
+        margin: 0 auto 0 auto;
+    }
+    .rightboard, .gainsbox {
+        margin-top: 32px;
+    }
+}
+@keyframes popin {0% {transform: scale(0.95) translateY(30px);} 100% {transform: none;}}
+.titlebar {background: linear-gradient(90deg, #263973, #2463b3 70%); color: #cfe8ff; font-size: 1.26em; letter-spacing: 1.2px; padding: 13px 22px 12px 18px; font-weight: 700; display: flex; align-items: center;}
+.titlebar .icon {font-size: 1.33em; margin-right: 11px;}
+.modebar {display: flex; justify-content: center; background: #232845; border-bottom: 1.5px solid #253050;}
+.modebtn {background: none; color: #93b6e0; border: none; border-bottom: 3px solid transparent; padding: 11px 0 9px 0; font-size: 1em; font-weight: 500; margin: 0 22px; cursor: pointer; transition: color 0.18s, border 0.18s;}
+.modebtn.active, .modebtn:hover {color: #6ec2f7; border-bottom: 3px solid #6ec2f7;}
+.mainmsg {min-height: 58px; margin: 23px 0 8px 0; font-size: 1.16em; font-weight: 500; text-align: center; color: #fff; text-shadow: 0 1px 4px #0004; padding: 0 8px;}
+.flexrow {display: flex; gap: 11px; justify-content: center; margin: 13px 0 0 0;}
+.btn {background: linear-gradient(90deg, #2167a8, #49cdf7 90%); color: #fff; border: none; border-radius: 9px; font-size: 1em; font-weight: 600; padding: 9px 20px; margin: 0 2px; cursor: pointer; box-shadow: 0 3px 18px #0736541e; transition: background 0.16s;}
+.btn[disabled], .btn.cooldown {opacity:0.56; cursor: not-allowed;}
+.btn:hover:enabled {background: linear-gradient(90deg, #49cdf7, #2167a8 90%); transform: translateY(-2px) scale(1.04);}
+.sections {display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 17px;}
+.section {background: #232845; border-radius: 9px; padding: 12px 9px 12px 15px; font-size: 0.97em; box-shadow: 0 2px 13px #22325814; min-height: 62px;}
+.label {color: #6ec2f7; font-weight: 600; font-size: 0.99em; margin-bottom: 5px;}
+.timer, .points {font-family: monospace; font-size: 1.12em; color: #fff; padding: 0.2em 0.5em;}
+.excuse-section {margin:17px 0 0 0; background: #222b44; border-radius: 11px; padding: 10px 14px;}
+.excuse-head {font-size: 1.05em; color: #6ec2f7; font-weight:600; display:flex; align-items:center;}
+.excuse-msg {font-size:1em; margin:7px 0 0 0; min-height: 30px;}
+.excuse-row {display:flex; align-items:center;}
+.excuse-btn {margin-left:14px; font-size:0.96em; background: #263973; color:#fff; border-radius:6px; border:none; padding:4px 13px;}
+.excuse-btn[disabled], .excuse-btn.cooldown {opacity:0.48; cursor:not-allowed;}
+.historybox {margin: 22px 0 0 0; background: #222b44; border-radius: 11px; padding: 10px 14px;}
+.historyhead {font-size: 1.07em; color: #6ec2f7; font-weight:600; display: flex; align-items:center; cursor:pointer; user-select: none;}
+.historyhead .icon {margin-right: 7px;}
+ul.history {margin: 7px 0 0 0; padding: 0 0 0 14px; font-size: 0.97em;}
+ul.history li {color: #d0d4e6; margin-bottom: 2px; line-height: 1.45;}
+.collapsed {display: none;}
+.leaderbox {margin:0; background:#1d2336; border-radius:20px; padding:15px 14px;}
+.leaderhead {font-size:1.08em; color:#69cbf7; font-weight:600; margin-bottom:9px; letter-spacing:.5px;}
+.leader-row {display:flex; align-items:center; margin-bottom:5px;}
+.leader-rank {font-weight:700; margin-right:8px; width:26px;}
+.leader-me {background:#293b50; border-radius:5px;}
+.input-row {display:flex; align-items:center; gap:7px; margin-bottom:9px;}
+.user-inp {padding:5px 10px; border-radius:6px; border:none; font-size:1em; background:#232845; color:#fff; width:60%; max-width:180px;}
+@media (max-width: 650px) {
+    .window, .rightboard, .gainsbox {max-width:99vw;}
+    .sections {grid-template-columns:1fr; gap:9px;}
+    .titlebar {font-size:1.09em; padding:12px 7vw 11px 11px;}
+    .modebtn {font-size:0.96em; margin:0 10px;}
+}

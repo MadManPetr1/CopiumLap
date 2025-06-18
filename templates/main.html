@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ADC Copium Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:700,500,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script>
+        var timer_start={{ timer }};
+        function updateTimer() {
+            let now = Math.floor(Date.now());
+            let elapsed = now/1000 - timer_start;
+            let h = Math.floor(elapsed/3600), m = Math.floor((elapsed%3600)/60)%60, s = Math.floor(elapsed%60);
+            let t = (h>0?h+":":"") + (m<10&&h>0?"0":"") + m + ":" + (s<10?"0":"") + s;
+            document.getElementById('timer').textContent = t;
+        }
+        setInterval(updateTimer, 1000);
+        window.onload = updateTimer;
+
+        function toggleHistory(section) {
+            var box = document.getElementById("histlist-"+section);
+            box.classList.toggle("collapsed");
+        }
+    </script>
+</head>
+<body>
+  <div class="main-grid">
+    <div class="window">
+        <div class="titlebar">
+            <span class="icon">🧬</span> ADC Copium Dashboard
+        </div>
+        <form method="post" style="margin:0;">
+            <div class="modebar">
+                <button name="mode" value="motivation" class="modebtn{% if mode == 'motivation' %} active{% endif %}">✨ Motivation</button>
+                <button name="mode" value="insult" class="modebtn{% if mode == 'insult' %} active{% endif %}">🔥 Insult</button>
+            </div>
+        </form>
+        <div class="mainmsg">{{ msg }}</div>
+        <div class="flexrow">
+            <form method="post" style="display:inline;">
+                <input type="hidden" name="mode" value="{{ mode }}">
+                <input type="hidden" name="reroll" value="yes">
+                <button class="btn{% if cd_main %} cooldown{% endif %}" type="submit" {% if cd_main %}disabled{% endif %}>
+                    {% if cd_main %}Cooldown: {{ cd_main }}s{% else %}Reroll{% endif %}
+                </button>
+            </form>
+        </div>
+        <div class="sections">
+            <div class="section">
+                <div class="label">Time Spent here:</div>
+                <span class="timer" id="timer"></span>
+            </div>
+            <div class="section">
+                <div class="label">Points</div>
+                <span class="points">{{ points }}</span>
+            </div>
+        </div>
+        <div class="excuse-section">
+            <div class="excuse-head">🎭 Excuse Generator</div>
+            <div class="excuse-row">
+                <div class="excuse-msg">{{ excuse }}</div>
+                <form method="post" style="display:inline;">
+                    <input type="hidden" name="excuse_reroll" value="yes">
+                    <button class="excuse-btn{% if cd_excuse %} cooldown{% endif %}" type="submit" {% if cd_excuse %}disabled{% endif %}>
+                        {% if cd_excuse %}Cooldown: {{ cd_excuse }}s{% else %}Reroll{% endif %}
+                    </button>
+                </form>
+            </div>
+        </div>
+        <div class="historybox">
+            <div class="historyhead" onclick="toggleHistory('{{ mode }}')">
+                <span class="icon">{% if mode == 'motivation' %}✨{% else %}🔥{% endif %}</span> {{ mode.capitalize() }} History (2)
+            </div>
+            <ul class="history" id="histlist-{{ mode }}">
+                {% for h in main_history %}
+                <li>{{ h }}</li>
+                {% endfor %}
+            </ul>
+            <div class="historyhead" onclick="toggleHistory('excuse')">
+                <span class="icon">🎭</span> Excuse History (2)
+            </div>
+            <ul class="history" id="histlist-excuse">
+                {% for h in excuse_history %}
+                <li>{{ h }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    <div class="rightboard leaderbox">
+        <div class="leaderhead">🏆 Leaderboard</div>
+        <form method="post" class="input-row">
+            <input type="text" name="username" class="user-inp" placeholder="Enter your name" value="{{ username|default('') }}" maxlength="18" autocomplete="off" required>
+            <button class="btn" style="padding:6px 15px;font-size:0.97em;" type="submit">Set</button>
+        </form>
+        {% for n, v in leader %}
+            <div class="leader-row{% if n == username %} leader-me{% endif %}">
+                <span class="leader-rank">#{{ loop.index }}</span>
+                <span>{{ n }}</span>
+                <span style="margin-left:auto;font-family:monospace;">{{ v['points'] }} pts</span>
+                <span style="margin-left:15px;font-size:0.92em;color:#5ee;">{{ v['timer']|int }}s</span>
+            </div>
+        {% endfor %}
+    </div>
+    <div class="gainsbox">
+        <div class="gains-head">Last Gain/Loss</div>
+        {% if gains_source and gains_value is not none %}
+            <div class="gains-result g-{{ gains_source|lower }}">
+                {{ gains_source }}:
+                <span class="g-value {% if gains_value > 0 %}gain{% elif gains_value < 0 %}loss{% else %}neutral{% endif %}">
+                    {% if gains_value > 0 %}+{{ gains_value }} pts{% elif gains_value < 0 %}{{ gains_value }} pts{% else %}0 pts{% endif %}
+                </span>
+            </div>
+        {% else %}
+            <div style="color:#7885a7;opacity:.82;font-size:1.01em;">No gain/loss yet.</div>
+        {% endif %}
+        <form method="post">
+            <input type="hidden" name="flip" value="yes">
+            <button class="btn{% if cd_flip %} cooldown{% endif %}" type="submit" {% if cd_flip %}disabled{% endif %}>
+                {% if cd_flip %}Cooldown: {{ cd_flip }}s{% else %}Flip Points{% endif %}
+            </button>
+        </form>
+    </div>
+  </div>
+</body>
+</html>
