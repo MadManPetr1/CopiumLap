@@ -194,7 +194,6 @@ def index():
         gains_source=last_gain_source,
         gains_value=last_gain_value,
         points_history=points_history,
-        suggest_feedback=suggest_feedback,
     )
 
 if __name__ == "__main__":
