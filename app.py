@@ -9,7 +9,6 @@ LEADERBOARD_FILE = "leaderboard.json"
 INSULTS_FILE = "insults.txt"
 MOTIVATIONS_FILE = "motivations.txt"
 EXCUSES_FILE = "excuses.txt"
-SUGGESTIONS_FILE = "suggestions.txt"
 
 # --- Content Loaders ---
 def load_lines(filename):
@@ -102,18 +101,6 @@ def index():
     cd_main = get_cooldown("main")
     cd_excuse = get_cooldown("excuse")
     cd_flip = get_cooldown("flip")
-
-    # Suggestion logic
-    suggest_feedback = ""
-    if request.method == "POST" and "suggestion" in request.form:
-        suggestion = request.form.get("suggestion", "").strip()[:160]
-        category = request.form.get("category", "")
-        if suggestion and category in ("insult", "motivation"):
-            with open(SUGGESTIONS_FILE, "a", encoding="utf-8") as f:
-                f.write(f"{category.upper()}: {suggestion}\n")
-            suggest_feedback = "Thanks for your suggestion! Pending review."
-        else:
-            suggest_feedback = "Invalid suggestion."
 
     # Username input/leaderboard update
     if request.method == "POST" and "username" in request.form:

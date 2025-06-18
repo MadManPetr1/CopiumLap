@@ -136,19 +136,6 @@
             </button>
         </form>
     </div>
-    <div class="suggestbox" style="margin:28px 0 0 0; background:#1d2336; border-radius:15px; padding:13px 16px;">
-      <form method="post" style="display:flex; flex-wrap:wrap; gap:9px; align-items:center;">
-        <input name="suggestion" maxlength="160" required placeholder="Suggest a new insult or motivation..." style="flex:1; min-width:140px; padding:7px; border-radius:7px; border:none; background:#232845; color:#fff;">
-        <select name="category" style="padding:7px 10px; border-radius:7px; border:none; background:#232845; color:#fff;">
-          <option value="insult">Insult</option>
-          <option value="motivation">Motivation</option>
-        </select>
-        <button class="btn" type="submit" style="padding:7px 17px;">Suggest</button>
-      </form>
-      {% if suggest_feedback %}
-        <div style="margin-top:9px; color:#7ffcc7; font-size:0.97em;">{{ suggest_feedback }}</div>
-      {% endif %}
-    </div>
     <div class="statgraph" style="margin:28px 0 0 0; background:#1d2336; border-radius:15px; padding:16px;">
   <div style="font-weight:600;color:#99e2ff;margin-bottom:6px;">Points History</div>
   <canvas id="pointsChart" height="90"></canvas>
